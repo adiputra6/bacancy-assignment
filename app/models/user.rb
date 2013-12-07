@@ -5,4 +5,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :products
+
+  def admin?
+    is_admin
+  end
 end

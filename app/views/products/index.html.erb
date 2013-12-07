@@ -1,4 +1,8 @@
-<h1>Listing products</h1>
+<h3>Products for <%= @user.email -%></h3>
+
+<% if @products.empty? %>
+  No products for this user
+<% else %>
 
 <table>
   <thead>
@@ -29,3 +33,5 @@
 <br>
 
 <%= link_to 'New Product', new_product_path %>
+
+<% end %>

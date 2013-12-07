@@ -1,3 +1,11 @@
-<% @users.each do |user| %>
-  <b><%= user.inspect %></b> <br />
-<% end %>
+<div>
+  <% @users.each do |user| %>
+    <div style="border:1px dotted gray; margin: 5px;">
+      <%= user.email %>
+      <%= link_to 'Show Products', user_products_path(user) %>
+      <% if can? :manage, user -%>
+        <%= link_to 'Edit User', edit_user_path(user) %>
+      <% end -%>
+    </div>
+  <% end %>
+</div>
