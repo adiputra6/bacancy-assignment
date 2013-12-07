@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :set_user
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   # GET /products
@@ -26,11 +27,12 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.new(product_params)
+    @product.user_id = @user.id
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to @product, notice: 'Product was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @product }
+        format.html { redirect_to [@user, @product], notice: 'Product was successfully created.' }
+        format.json { render action: 'show', status: :created, location: [@user, @product] }
       else
         format.html { render action: 'new' }
         format.json { render json: @product.errors, status: :unprocessable_entity }
@@ -43,7 +45,7 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update(product_params)
-        format.html { redirect_to @product, notice: 'Product was successfully updated.' }
+        format.html { redirect_to [@user, @product], notice: 'Product was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -57,12 +59,16 @@ class ProductsController < ApplicationController
   def destroy
     @product.destroy
     respond_to do |format|
-      format.html { redirect_to products_url }
+      format.html { redirect_to user_products_url(@user) }
       format.json { head :no_content }
     end
   end
 
   private
+    def set_user
+      @user = User.find(params[:user_id])
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Product.find(params[:id])
@@ -70,6 +76,6 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:name, :price, :user_id, :image)
+      params.require(:product).permit(:name, :price, :image)
     end
 end

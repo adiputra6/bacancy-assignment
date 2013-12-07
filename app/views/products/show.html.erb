@@ -20,5 +20,7 @@
   <%= image_tag @product.image.url %>
 </p>
 
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+<% if can? :edit, @product -%>
+  <%= link_to 'Edit', edit_user_product_path(@user, @product) %> |
+<% end -%>
+<%= link_to 'Back', user_products_path(@user) %>

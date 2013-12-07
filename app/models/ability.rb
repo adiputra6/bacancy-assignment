@@ -33,7 +33,7 @@ class Ability
       can :manage, :all
     else
       if !user.new_record?
-        can :manage, User, :id => user.id
+        can :edit, User, :id => user.id
         can :manage, Product, :user_id => user.id
       else
         can :read, :all

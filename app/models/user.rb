@@ -4,7 +4,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :products
+  has_many :products, dependent: :destroy
+
+  validates_format_of :mobile, with: /\A[1-9][0-9]{9}\Z/, allow_blank: true
 
   def admin?
     is_admin

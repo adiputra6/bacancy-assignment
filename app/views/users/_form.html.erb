@@ -1,0 +1,63 @@
+<%= form_for(@user, :html => {:class => 'form-horizontal'}) do |f| -%>
+
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+    <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<% unless @user.new_record? %>
+  <div class="control-group">
+    <%= f.label :email, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :email, disabled: true %>
+    </div>
+  </div>
+<% end %>
+
+<div class="control-group">
+  <%= f.label :mobile, :class => 'control-label' %>
+  <div class="controls">
+    <%= f.text_field :mobile %>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label :address, :class => 'control-label' %>
+  <div class="controls">
+    <%= f.text_field :address %>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label :country, :class => 'control-label' %>
+  <div class="controls">
+    <%= f.select :country, options_for_select([nil] + Country.all.map(&:name)) %>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label :state, :class => 'control-label' %>
+  <div class="controls">
+    <%= f.select :state, [], disabled: true %>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label :city, :class => 'control-label' %>
+  <div class="controls">
+    <%= f.select :city, [], disabled: true %>
+  </div>
+</div>
+
+<div class="controls">
+  <%= f.submit class: 'btn' %>
+</div>
+
+<% end -%>

@@ -1,37 +1,41 @@
 <h3>Products for <%= @user.email -%></h3>
 
-<% if @products.empty? %>
-  No products for this user
-<% else %>
+<div>
+  <% if @products.empty? %>
+    No products for this user
+  <% else %>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>User</th>
+          <th>Image</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Price</th>
-      <th>User</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+      <tbody>
+        <% @products.each do |product| %>
+          <tr>
+            <td><%= product.name %></td>
+            <td><%= product.price %></td>
+            <td><%= product.user_id %></td>
+            <td><%= image_tag product.image.url(:thumb) %></td>
+            <td><%= link_to 'Show', [@user, product] %></td>
+            <% if can? :manage, product %>
+              <td><%= link_to 'Edit', edit_user_product_path(@user, product) %></td>
+              <td><%= link_to 'Destroy', [@user, product], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>
 
-  <tbody>
-    <% @products.each do |product| %>
-      <tr>
-        <td><%= product.name %></td>
-        <td><%= product.price %></td>
-        <td><%= product.user_id %></td>
-        <td><%= link_to 'Show', product %></td>
-        <td><%= link_to 'Edit', edit_product_path(product) %></td>
-        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Product', new_product_path %>
-
+<% if can?(:create, Product) && (@user == current_user || current_user.admin?) %>
+  <%= link_to 'New Product', new_user_product_path(@user) %>
 <% end %>

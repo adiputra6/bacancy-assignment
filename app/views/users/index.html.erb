@@ -1,11 +1,20 @@
+<h3>List of users</h3>
 <div>
   <% @users.each do |user| %>
     <div style="border:1px dotted gray; margin: 5px;">
       <%= user.email %>
-      <%= link_to 'Show Products', user_products_path(user) %>
+      <%= link_to "Products (#{user.products.count})", user_products_path(user) %>
       <% if can? :manage, user -%>
-        <%= link_to 'Edit User', edit_user_path(user) %>
+        <%= link_to 'Edit', edit_user_path(user) %>
       <% end -%>
+      <% if can?(:delete, user) && user != current_user %>
+        <%= link_to 'Delete', user_path(user), method: :delete %>
+      <% end %>
     </div>
+  <% end %>
+</div>
+<div>
+  <% if can? :create, User %>
+    <%= link_to 'Create user', new_user_path %>
   <% end %>
 </div>
