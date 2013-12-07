@@ -36,5 +36,14 @@ function initializeAddressPicker() {
 
 $(function() {
   $('#user_state, #user_city').attr('disabled', 'disabled');
+
+  // Mobile number validation
+  $('#user-form').on('submit', function(e) {
+    if(!/^[1-9][0-9]{9}$/.test($('#user_mobile').val())) {
+      alert('Invalid mobile number');
+      return false;
+    }
+  });
+
   initializeAddressPicker();
 })
