@@ -12,11 +12,16 @@ admin.password_confirmation = 'admin123'
 admin.is_admin = true
 admin.save
 
+Continent.create(name: 'Asia')
+Continent.create(name: 'Africa')
+Continent.create(name: 'Australia')
+Continent.create(name: 'America')
 
-Country.create(name: 'India')
-Country.create(name: 'USA')
-Country.create(name: 'France')
-Country.create(name: 'Spain')
+
+Country.create(name: 'India', continent_id: 1)
+Country.create(name: 'USA', continent_id: 2)
+Country.create(name: 'France', continent_id: 3)
+Country.create(name: 'Spain', continent_id: 4	)
 
 State.create(name: 'Andhra Pradesh', country_id:1)
 State.create(name: 'Gujarat', country_id:1)

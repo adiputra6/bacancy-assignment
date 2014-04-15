@@ -1,6 +1,25 @@
 function initializeAddressPicker() {
-  $('#user_country').on('change', function(e) {
+
+  $('#user_continent').on('change', function(e){
     e.preventDefault();
+     $.ajax({
+      url: '/country',
+      dataType: 'json',
+      data: {continent_name: $('#user_continent').val()},
+      type: 'GET'
+    }).done(function(data){
+      var country_data = "<option_value=''>--</option>";
+      for(i=0; i< data.length; i += 1) {
+        country_data += "<option value='" +data[i] +"' >" + data[i] + "</option>";
+      }
+      $('#user_country').html(country_data).removeAttr('disabled');
+    });
+  });
+
+
+  $('#user_country').on('click', function(e){
+    e.preventDefault();
+    
 
     $.ajax({
       url: '/states',
@@ -15,6 +34,7 @@ function initializeAddressPicker() {
       $('#user_state').html(state_data).removeAttr('disabled');
     });
   });
+
 
   $('#user_state').on('change', function(e) {
     e.preventDefault();

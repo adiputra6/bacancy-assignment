@@ -35,10 +35,18 @@
   </div>
 </div>
 
+<div class ="control-group">
+  <%= f.label :continent, :class => 'control-label'%>
+  <div class="controls">
+    <%= f.select :continent, options_for_select([nil] + Continent.all.map(&:name))%>
+  </div>
+</div>
+
+
 <div class="control-group">
   <%= f.label :country, :class => 'control-label' %>
   <div class="controls">
-    <%= f.select :country, options_for_select([nil] + Country.all.map(&:name)) %>
+    <%= f.select :country, [], disabled: false%>
   </div>
 </div>
 
